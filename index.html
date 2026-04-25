@@ -7,67 +7,68 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,200;9..40,300;9..40,400;9..40,500&display=swap');
 *{margin:0;padding:0;box-sizing:border-box}
-html,body{width:100%;height:100%;overflow:hidden;background:#080810}
+html,body{width:100%;height:100%;overflow:hidden;background:linear-gradient(135deg,#FFF4EC 0%,#FFE8D2 50%,#FFDCC0 100%)}
 #cv{position:fixed;inset:0;z-index:0}
 
-/* Grain texture overlay for filmic feel */
+/* Very subtle warm grain — helps depth on bright bg */
 #grain{
   position:fixed;inset:0;z-index:2;pointer-events:none;
   background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-  opacity:0.028;mix-blend-mode:overlay;
+  opacity:0.018;mix-blend-mode:multiply;
 }
 
-/* Vignette */
+/* Vignette — very soft, warm toned */
 #vignette{
   position:fixed;inset:0;z-index:3;pointer-events:none;
-  background:radial-gradient(ellipse at 50% 50%, transparent 45%, rgba(5,4,12,0.65) 100%);
+  background:radial-gradient(ellipse at 50% 50%, transparent 55%, rgba(200,120,60,0.08) 100%);
 }
 
 #ui{position:fixed;inset:0;z-index:30;pointer-events:none;font-family:'DM Sans',sans-serif}
-#fade{position:fixed;inset:0;z-index:20;pointer-events:none;background:#080810;opacity:0;transition:opacity .7s ease}
+#fade{position:fixed;inset:0;z-index:20;pointer-events:none;background:#FFF4EC;opacity:0;transition:opacity .7s ease}
 
 /* TOP BAR */
 #topbar{
   position:absolute;top:0;left:0;right:0;
   display:flex;align-items:center;justify-content:space-between;
   padding:26px 48px;
+  background:linear-gradient(180deg,rgba(255,244,236,0.85) 0%,transparent 100%);
 }
 #galp-logo{display:flex;align-items:center;gap:10px}
-#galp-logo svg{width:28px;height:28px;filter:drop-shadow(0 0 6px rgba(255,107,0,0.5))}
+#galp-logo svg{width:28px;height:28px;filter:drop-shadow(0 2px 6px rgba(255,107,0,0.25))}
 #galp-wordmark{
   font-family:'Bebas Neue',sans-serif;font-size:20px;
-  letter-spacing:5px;color:rgba(255,255,255,0.82);
+  letter-spacing:5px;color:rgba(30,20,10,0.82);
 }
 #nav-label{
   font-size:9px;letter-spacing:3.5px;text-transform:uppercase;
-  color:rgba(255,255,255,0.22);font-weight:300;transition:opacity .4s;
+  color:rgba(80,50,20,0.35);font-weight:300;transition:opacity .4s;
 }
 
 /* PANEL - bottom left */
 #panel{
   position:absolute;bottom:0;left:0;right:0;
   padding:0 48px 76px;
-  background:linear-gradient(0deg,rgba(8,8,16,0.94) 0%,rgba(8,8,16,0.7) 50%,transparent 100%);
+  background:linear-gradient(0deg,rgba(255,244,236,0.96) 0%,rgba(255,244,236,0.82) 50%,transparent 100%);
   transition:opacity .5s ease;
 }
 #panel.hidden{opacity:0;pointer-events:none}
 #eyebrow{
   font-size:9px;letter-spacing:4px;text-transform:uppercase;
-  color:#FF6B00;font-weight:400;margin-bottom:10px;
+  color:#FF6B00;font-weight:500;margin-bottom:10px;
   opacity:0;transition:opacity .5s ease .1s;
 }
-#eyebrow.in{opacity:0.8}
+#eyebrow.in{opacity:0.85}
 #title{
   font-family:'Bebas Neue',sans-serif;
   font-size:clamp(38px,5vw,68px);
-  color:#fff;line-height:.9;letter-spacing:.5px;
+  color:#1a0e06;line-height:.9;letter-spacing:.5px;
   margin-bottom:14px;max-width:660px;
   opacity:0;transform:translateY(14px);
   transition:opacity .55s ease .15s,transform .55s ease .15s;
 }
 #title.in{opacity:1;transform:translateY(0)}
 #subtitle{
-  font-size:13px;line-height:1.8;color:rgba(255,255,255,0.38);
+  font-size:13px;line-height:1.8;color:rgba(40,20,5,0.48);
   font-weight:300;max-width:480px;margin-bottom:24px;
   opacity:0;transition:opacity .55s ease .25s;
   min-height:24px;
@@ -86,84 +87,84 @@ html,body{width:100%;height:100%;overflow:hidden;background:#080810}
 .stat-row{display:flex;gap:3px}
 .stat-pill{
   padding:12px 18px;
-  background:rgba(255,255,255,0.03);
-  border:1px solid rgba(255,255,255,0.06);
-  border-top:1px solid rgba(255,107,0,0.25);
-  backdrop-filter:blur(20px);
-  min-width:100px;transition:border-color .3s,background .3s;
+  background:rgba(255,255,255,0.72);
+  border:1px solid rgba(255,107,0,0.15);
+  border-top:2px solid rgba(255,107,0,0.45);
+  backdrop-filter:blur(12px);
+  min-width:100px;transition:border-color .3s,background .3s,box-shadow .3s;
 }
-.stat-pill:hover{background:rgba(255,107,0,0.05);border-top-color:rgba(255,107,0,0.6)}
+.stat-pill:hover{background:rgba(255,255,255,0.95);border-top-color:#FF6B00;box-shadow:0 4px 20px rgba(255,107,0,0.12)}
 .sn{font-family:'Bebas Neue',sans-serif;font-size:36px;color:#FF6B00;line-height:1}
-.sl{font-size:8px;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,0.28);margin-top:3px}
+.sl{font-size:8px;letter-spacing:2.5px;text-transform:uppercase;color:rgba(40,20,5,0.4);margin-top:3px}
 
 /* theme list */
 .theme-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;max-width:480px}
 .theme-item{
-  padding:12px 16px;background:rgba(255,255,255,0.025);
-  border-left:1.5px solid rgba(255,107,0,0.22);
-  transition:background .3s,border-color .3s;
+  padding:12px 16px;background:rgba(255,255,255,0.6);
+  border-left:2px solid rgba(255,107,0,0.3);
+  transition:background .3s,border-color .3s,box-shadow .3s;
 }
-.theme-item:hover{background:rgba(255,107,0,0.04);border-left-color:rgba(255,107,0,0.6)}
-.ti-n{font-size:8px;letter-spacing:3px;color:#FF6B00;opacity:.6;margin-bottom:3px}
-.ti-t{font-size:11px;font-weight:400;color:rgba(255,255,255,0.7)}
+.theme-item:hover{background:rgba(255,255,255,0.95);border-left-color:#FF6B00;box-shadow:0 2px 12px rgba(255,107,0,0.1)}
+.ti-n{font-size:8px;letter-spacing:3px;color:#FF6B00;opacity:.7;margin-bottom:3px}
+.ti-t{font-size:11px;font-weight:500;color:rgba(30,15,5,0.78)}
 
 /* phase list */
 .phase-list{display:flex;flex-direction:column;gap:2px;max-width:460px}
 .phase-item{
   display:flex;align-items:center;gap:14px;
-  padding:10px 14px;background:rgba(255,255,255,0.025);
-  border-left:1.5px solid rgba(255,107,0,0.18);
+  padding:10px 14px;background:rgba(255,255,255,0.55);
+  border-left:2px solid rgba(255,107,0,0.22);
   transition:all .3s;
 }
-.phase-item:hover{background:rgba(255,107,0,0.04);border-left-color:#FF6B00;padding-left:18px}
-.pi-n{font-size:8px;letter-spacing:2px;color:rgba(255,107,0,0.55);width:20px;flex-shrink:0}
-.pi-t{font-size:11px;color:rgba(255,255,255,0.65);font-weight:400}
+.phase-item:hover{background:rgba(255,255,255,0.95);border-left-color:#FF6B00;padding-left:18px;box-shadow:0 2px 12px rgba(255,107,0,0.1)}
+.pi-n{font-size:8px;letter-spacing:2px;color:rgba(255,107,0,0.7);width:20px;flex-shrink:0}
+.pi-t{font-size:11px;color:rgba(30,15,5,0.72);font-weight:400}
 
 /* result list */
 .result-list{display:flex;flex-direction:column;gap:2px;max-width:460px}
 .result-item{
-  padding:12px 16px;background:rgba(255,255,255,0.025);
-  border-left:1.5px solid rgba(255,107,0,0.18);transition:all .3s;
+  padding:12px 16px;background:rgba(255,255,255,0.55);
+  border-left:2px solid rgba(255,107,0,0.2);transition:all .3s;
 }
-.result-item:hover{background:rgba(255,107,0,0.04);border-left-color:#FF6B00}
-.ri-t{font-size:11px;font-weight:500;color:rgba(255,255,255,0.75);margin-bottom:3px}
-.ri-d{font-size:10px;color:rgba(255,255,255,0.28);line-height:1.6}
+.result-item:hover{background:rgba(255,255,255,0.95);border-left-color:#FF6B00;box-shadow:0 2px 12px rgba(255,107,0,0.1)}
+.ri-t{font-size:11px;font-weight:600;color:rgba(30,15,5,0.82);margin-bottom:3px}
+.ri-d{font-size:10px;color:rgba(30,15,5,0.4);line-height:1.6}
 
 /* budget */
 .budget-wrap{max-width:400px}
-.b-total{font-family:'Bebas Neue',sans-serif;font-size:50px;color:#fff;letter-spacing:1px;margin-bottom:2px}
-.b-sub{font-size:9px;letter-spacing:2.5px;color:rgba(255,107,0,0.4);text-transform:uppercase;margin-bottom:18px}
+.b-total{font-family:'Bebas Neue',sans-serif;font-size:50px;color:#1a0e06;letter-spacing:1px;margin-bottom:2px}
+.b-sub{font-size:9px;letter-spacing:2.5px;color:rgba(255,107,0,0.6);text-transform:uppercase;margin-bottom:18px}
 .b-row{display:flex;align-items:center;gap:10px;margin-bottom:7px}
-.b-name{font-size:10px;color:rgba(255,255,255,0.3);width:110px;flex-shrink:0}
-.b-track{flex:1;height:1.5px;background:rgba(255,255,255,0.06);overflow:hidden}
-.b-fill{height:100%;background:linear-gradient(90deg,#FF4400,#FF9500);width:0;transition:width 1.5s cubic-bezier(.4,0,.2,1)}
-.b-val{font-size:10px;color:#FF6B00;width:36px;text-align:right;flex-shrink:0}
+.b-name{font-size:10px;color:rgba(30,15,5,0.45);width:110px;flex-shrink:0}
+.b-track{flex:1;height:1.5px;background:rgba(200,140,80,0.18);overflow:hidden}
+.b-fill{height:100%;background:linear-gradient(90deg,#FF5500,#FF9500);width:0;transition:width 1.5s cubic-bezier(.4,0,.2,1)}
+.b-val{font-size:10px;color:#FF6B00;width:36px;text-align:right;flex-shrink:0;font-weight:600}
 
 /* CTA */
 .cta{
   display:inline-flex;align-items:center;gap:8px;
   padding:10px 22px;
-  background:rgba(255,107,0,0.06);
-  border:1px solid rgba(255,107,0,0.28);
-  color:rgba(255,255,255,0.65);
+  background:rgba(255,107,0,0.09);
+  border:1px solid rgba(255,107,0,0.35);
+  color:rgba(180,80,0,0.85);
   font-size:9px;letter-spacing:2.5px;text-transform:uppercase;
   cursor:pointer;pointer-events:all;transition:all .3s;
   font-family:'DM Sans',sans-serif;
 }
-.cta:hover{background:rgba(255,107,0,0.12);border-color:rgba(255,107,0,0.7);color:#fff;box-shadow:0 0 20px rgba(255,107,0,0.12)}
+.cta:hover{background:#FF6B00;border-color:#FF6B00;color:#fff;box-shadow:0 4px 20px rgba(255,107,0,0.28)}
 .cta-a{opacity:.4;transition:all .3s}.cta:hover .cta-a{opacity:1;transform:translateX(3px)}
 
 /* BOTTOM NAV */
 #bnav{position:absolute;bottom:26px;right:48px;display:flex;align-items:center;gap:8px}
-.ndot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,0.12);cursor:pointer;pointer-events:all;transition:all .35s}
-.ndot.on{background:#FF6B00;box-shadow:0 0 5px rgba(255,107,0,0.6)}
-.narr{width:28px;height:28px;border-radius:50%;border:1px solid rgba(255,255,255,0.08);background:transparent;color:rgba(255,255,255,0.35);cursor:pointer;font-size:10px;transition:all .25s;display:flex;align-items:center;justify-content:center;pointer-events:all}
-.narr:hover{border-color:rgba(255,107,0,0.5);color:#FF6B00}
-.narr:disabled{opacity:.1;pointer-events:none}
+.ndot{width:5px;height:5px;border-radius:50%;background:rgba(180,100,40,0.2);cursor:pointer;pointer-events:all;transition:all .35s}
+.ndot.on{background:#FF6B00;box-shadow:0 0 6px rgba(255,107,0,0.4)}
+.narr{width:28px;height:28px;border-radius:50%;border:1px solid rgba(180,100,40,0.2);background:rgba(255,255,255,0.5);color:rgba(150,80,20,0.5);cursor:pointer;font-size:10px;transition:all .25s;display:flex;align-items:center;justify-content:center;pointer-events:all}
+.narr:hover{border-color:rgba(255,107,0,0.5);color:#FF6B00;background:rgba(255,255,255,0.9)}
+.narr:disabled{opacity:.15;pointer-events:none}
 
 /* PROGRESS */
-#prog{position:absolute;bottom:0;left:0;right:0;height:1px;background:rgba(255,255,255,0.04)}
-#pfill{height:100%;background:rgba(255,107,0,0.5);transition:width .6s ease;box-shadow:0 0 4px rgba(255,107,0,0.4)}
+#prog{position:absolute;bottom:0;left:0;right:0;height:1px;background:rgba(200,130,60,0.15)}
+#pfill{height:100%;background:#FF6B00;transition:width .6s ease;opacity:0.7}
 </style>
 </head>
 <body>
@@ -210,15 +211,15 @@ const renderer = new THREE.WebGLRenderer({
 });
 renderer.setSize(innerWidth, innerHeight);
 renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
-renderer.setClearColor(0x080810, 1);
+renderer.setClearColor(0xFFECDA, 1);  // warm off-white — matches CSS bg
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1.05;
+renderer.toneMappingExposure = 0.88;  // slightly reduced — bright env
 renderer.physicallyCorrectLights = true;
 
 const scene = new THREE.Scene();
-scene.fog = new THREE.FogExp2(0x080810, 0.022);
+scene.fog = new THREE.Fog(0xFFECDA, 22, 80);  // warm fog, low density
 const camera = new THREE.PerspectiveCamera(44, innerWidth / innerHeight, 0.05, 200);
 
 // Camera spring
@@ -233,41 +234,42 @@ const cam = {
 camera.position.copy(cam.pos);
 
 // ─────────────────────────────────────────────────────
-// CINEMATIC LIGHTING — warm orange energy
+// CINEMATIC LIGHTING — bright warm daylight, orange accent
 // ─────────────────────────────────────────────────────
-// Ambient — very warm, deep
-const hemi = new THREE.HemisphereLight(0x2a1a08, 0x080812, 1.2);
+// Hemisphere — warm sky above, warm ground below
+const hemi = new THREE.HemisphereLight(0xFFE8CC, 0xFFD4AA, 1.8);
 scene.add(hemi);
 
-// Key — warm directional (sunset feel)
-const key = new THREE.DirectionalLight(0xFFCC88, 2.8);
+// Key — bright warm directional (clean daylight)
+const key = new THREE.DirectionalLight(0xFFF5E8, 2.0);
 key.position.set(8, 14, 6);
 key.castShadow = true;
 key.shadow.mapSize.set(2048, 2048);
 key.shadow.camera.left = -20; key.shadow.camera.right = 20;
 key.shadow.camera.top = 20; key.shadow.camera.bottom = -20;
 key.shadow.bias = -0.0004; key.shadow.normalBias = 0.02;
+key.shadow.radius = 3;  // soft shadows
 scene.add(key);
 
-// Orange rim — energy source feel
-const rim = new THREE.PointLight(0xFF5500, 6, 50);
+// Orange rim — subtle, energy accent only
+const rim = new THREE.PointLight(0xFF7722, 1.8, 40);
 rim.position.set(-10, 3, -8); scene.add(rim);
 
-// Secondary warm fill
-const fill = new THREE.PointLight(0xFF8833, 2.5, 40);
+// Secondary warm fill — very soft
+const fill = new THREE.PointLight(0xFFCC88, 1.2, 35);
 fill.position.set(6, -2, 8); scene.add(fill);
 
-// Ground bounce — warm
-const bounce = new THREE.PointLight(0xFF4400, 1.2, 25);
-bounce.position.set(0, -6, 2); scene.add(bounce);
+// Ground bounce — warm cream
+const bounce = new THREE.PointLight(0xFFEED8, 0.6, 20);
+bounce.position.set(0, -4, 2); scene.add(bounce);
 
 // ─────────────────────────────────────────────────────
-// GROUND — dark reflective floor
+// GROUND — warm light floor
 // ─────────────────────────────────────────────────────
 const ground = new THREE.Mesh(
   new THREE.PlaneGeometry(120, 120),
   new THREE.MeshStandardMaterial({
-    color: 0x0a0a12, roughness: 0.85, metalness: 0.15
+    color: 0xFFE4C8, roughness: 0.92, metalness: 0.02
   })
 );
 ground.rotation.x = -Math.PI / 2;
@@ -275,10 +277,10 @@ ground.position.y = -5.5;
 ground.receiveShadow = true;
 scene.add(ground);
 
-// Subtle floor grid
-const grid = new THREE.GridHelper(80, 50, 0xFF6B00, 0x111118);
+// Subtle warm grid
+const grid = new THREE.GridHelper(80, 50, 0xFF9944, 0xFFD4AA);
 grid.position.y = -5.48;
-grid.material.opacity = 0.07; grid.material.transparent = true;
+grid.material.opacity = 0.12; grid.material.transparent = true;
 scene.add(grid);
 
 // ─────────────────────────────────────────────────────
@@ -301,10 +303,10 @@ const globeG = new THREE.Group();
 scene.add(globeG);
 globeG.position.set(3.8, 0, 0);
 
-// Deep ocean
+// Deep ocean — richer blue, still readable in bright env
 const ocean = mk(
   new THREE.SphereGeometry(3, 72, 72),
-  pbr(0x0a2840, 0.08, 0.25)
+  pbr(0x1a4a6a, 0.12, 0.2)
 );
 globeG.add(ocean);
 
@@ -337,24 +339,24 @@ const mzDot = mk(new THREE.SphereGeometry(0.2, 14, 14), mzMat);
 mzDot.position.set(-R0 * Math.sin(phi0) * Math.cos(th0), R0 * Math.cos(phi0), R0 * Math.sin(phi0) * Math.sin(th0));
 globeG.add(mzDot);
 
-// Atmosphere layers
+// Atmosphere layers — lighter, more visible in bright scene
 const atmo1 = mk(new THREE.SphereGeometry(3.15, 36, 36),
-  new THREE.MeshStandardMaterial({ color: 0x1a3a55, roughness: 0, metalness: 0, transparent: true, opacity: 0.09, side: THREE.BackSide }));
+  new THREE.MeshStandardMaterial({ color: 0x88BBDD, roughness: 0, metalness: 0, transparent: true, opacity: 0.07, side: THREE.BackSide }));
 globeG.add(atmo1);
 const atmo2 = mk(new THREE.SphereGeometry(3.28, 36, 36),
-  new THREE.MeshStandardMaterial({ color: 0xFF6B00, roughness: 0, metalness: 0, transparent: true, opacity: 0.025, side: THREE.BackSide,
-    emissive: new THREE.Color(0xFF4400), emissiveIntensity: 0.08 }));
+  new THREE.MeshStandardMaterial({ color: 0xFF9944, roughness: 0, metalness: 0, transparent: true, opacity: 0.018, side: THREE.BackSide,
+    emissive: new THREE.Color(0xFF6B00), emissiveIntensity: 0.04 }));
 globeG.add(atmo2);
 
-// Energy ring around equator
+// Energy ring — orange accent, reduced emissive
 const eqRing = mk(new THREE.TorusGeometry(3.18, 0.028, 8, 90),
-  pbr(0xFF6B00, 0.1, 0.3, 0xFF5500, 0.8));
+  pbr(0xFF6B00, 0.2, 0.4, 0xFF5500, 0.3));
 eqRing.rotation.x = Math.PI / 2;
 globeG.add(eqRing);
 
-// Latitude ring — brushed metal
+// Latitude ring — brushed metal, warm silver
 const latRing = mk(new THREE.TorusGeometry(3.4, 0.015, 6, 80),
-  pbr(0x888888, 0.3, 0.85));
+  pbr(0xBBBBAA, 0.3, 0.8));
 latRing.rotation.x = Math.PI / 3;
 globeG.add(latRing);
 
@@ -370,11 +372,11 @@ const panelFrame = mk(new THREE.BoxGeometry(4.2, 2.6, 0.1), frameMat);
 panelFrame.castShadow = true;
 solarG.add(panelFrame);
 
-// Glass panel — frosted blue
+// Glass panel — frosted blue, lighter in bright env
 const glassMat = new THREE.MeshStandardMaterial({
-  color: 0x1a2a44, roughness: 0.03, metalness: 0.05,
-  transparent: true, opacity: 0.82,
-  emissive: new THREE.Color(0x0a1828), emissiveIntensity: 0.4
+  color: 0x2244668, roughness: 0.04, metalness: 0.08,
+  transparent: true, opacity: 0.80,
+  emissive: new THREE.Color(0x0a1828), emissiveIntensity: 0.08
 });
 const panelGlass = mk(new THREE.BoxGeometry(3.9, 2.3, 0.06), glassMat);
 panelGlass.position.z = 0.04;
@@ -450,9 +452,9 @@ const waterG = new THREE.Group();
 scene.add(waterG);
 
 const waterMat = new THREE.MeshStandardMaterial({
-  color: 0x0a2035, roughness: 0.02, metalness: 0.1,
-  transparent: true, opacity: 0.88,
-  emissive: new THREE.Color(0x051020), emissiveIntensity: 0.5
+  color: 0x2255884, roughness: 0.04, metalness: 0.12,
+  transparent: true, opacity: 0.78,
+  emissive: new THREE.Color(0x112233), emissiveIntensity: 0.06
 });
 const waterBase = mk(new THREE.PlaneGeometry(9, 6, 32, 32), waterMat);
 waterBase.rotation.x = -Math.PI / 2;
@@ -493,15 +495,15 @@ chartData.forEach((d, i) => {
   bar.position.set(-1.9 + i * 0.8, d.h / 2 - 5.5, 0);
   bar.castShadow = true; bar.receiveShadow = true;
   chartG.add(bar);
-  // top cap glow
+  // top cap — orange accent, subtle in bright env
   const cap = mk(new THREE.BoxGeometry(0.43, 0.04, 0.43),
-    new THREE.MeshStandardMaterial({ color: d.col, emissive: new THREE.Color(d.col), emissiveIntensity: 1.2 }));
+    new THREE.MeshStandardMaterial({ color: d.col, emissive: new THREE.Color(d.col), emissiveIntensity: 0.25 }));
   cap.position.copy(bar.position);
   cap.position.y += d.h / 2;
   chartG.add(cap);
 });
-// Base plate
-const plate = mk(new THREE.BoxGeometry(5.6, 0.06, 1.2), pbr(0x1a1a22, 0.6, 0.5));
+// Base plate — warm light
+const plate = mk(new THREE.BoxGeometry(5.6, 0.06, 1.2), pbr(0xEEE0CC, 0.7, 0.2));
 plate.position.set(-0.1, -5.47, 0);
 chartG.add(plate);
 
@@ -556,19 +558,19 @@ for (let i = 0; i < flowN; i++) {
 }
 flowGeo.setAttribute('position', new THREE.BufferAttribute(flowPos, 3));
 const flowPts = new THREE.Points(flowGeo,
-  new THREE.PointsMaterial({ color: 0xFF7700, size: 0.045, transparent: true, opacity: 0.3, depthWrite: false, sizeAttenuation: true }));
+  new THREE.PointsMaterial({ color: 0xFF8833, size: 0.04, transparent: true, opacity: 0.18, depthWrite: false, sizeAttenuation: true }));
 scene.add(flowPts);
 
 // ─────────────────────────────────────────────────────
-// BACKGROUND — distant energy orbs (bokeh feel)
+// BACKGROUND — soft warm orbs (bokeh feel, light toned)
 // ─────────────────────────────────────────────────────
 [
-  [6, 2, -18, 3, 0.04], [-7, 1, -20, 2.5, 0.03],
-  [0, -3, -22, 4, 0.025], [10, -1, -16, 2, 0.05]
+  [6, 2, -18, 3, 0.06], [-7, 1, -20, 2.5, 0.05],
+  [0, -3, -22, 4, 0.04], [10, -1, -16, 2, 0.07]
 ].forEach(([x, y, z, r, op]) => {
   const orb = mk(new THREE.SphereGeometry(r, 20, 20),
-    new THREE.MeshStandardMaterial({ color: 0xFF6B00, transparent: true, opacity: op,
-      emissive: new THREE.Color(0xFF4400), emissiveIntensity: 0.4, depthWrite: false }));
+    new THREE.MeshStandardMaterial({ color: 0xFFCC88, transparent: true, opacity: op,
+      emissive: new THREE.Color(0xFF9944), emissiveIntensity: 0.08, depthWrite: false }));
   orb.position.set(x, y, z);
   scene.add(orb);
 });
@@ -819,16 +821,14 @@ function render() {
     globeG.rotation.y += 0.0012;
     eqRing.rotation.z += 0.003;
     latRing.rotation.y += 0.004;
-    mzDot.material.emissiveIntensity = 0.5 + Math.sin(gt * 2.8) * 0.25;
-    // Atmosphere subtle pulse
-    atmo2.material.emissiveIntensity = 0.05 + Math.sin(gt * 0.8) * 0.025;
+    mzDot.material.emissiveIntensity = 0.35 + Math.sin(gt * 2.8) * 0.15;
+    atmo2.material.emissiveIntensity = 0.025 + Math.sin(gt * 0.8) * 0.01;
   }
 
   // Solar panel — subtle tracking tilt
   if (solarG.visible) {
     solarG.rotation.y = Math.sin(gt * 0.2) * 0.05;
-    // Glass shimmer
-    glassMat.emissiveIntensity = 0.3 + Math.sin(gt * 1.5) * 0.08;
+    glassMat.emissiveIntensity = 0.06 + Math.sin(gt * 1.5) * 0.02;
   }
 
   // Turbine — slow blade rotation
@@ -880,11 +880,11 @@ function render() {
   }
   flowGeo.attributes.position.needsUpdate = true;
 
-  // Dynamic lights — warm energy pulse
-  rim.intensity = 5.5 + Math.sin(gt * 0.6) * 0.8;
+  // Dynamic lights — gentle warm variation (not pulsing aggressively)
+  rim.intensity = 1.6 + Math.sin(gt * 0.6) * 0.25;
   rim.position.x = -10 + Math.sin(gt * 0.18) * 2;
-  fill.intensity = 2.2 + Math.sin(gt * 0.45) * 0.5;
-  bounce.intensity = 1.0 + Math.sin(gt * 0.9) * 0.25;
+  fill.intensity = 1.1 + Math.sin(gt * 0.45) * 0.15;
+  bounce.intensity = 0.5 + Math.sin(gt * 0.9) * 0.08;
 
   // Grid drift
   grid.position.z = (gt * 0.12) % 1.5;
